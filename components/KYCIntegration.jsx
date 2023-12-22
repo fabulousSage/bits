@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import TokenContract from '../TokenContract';
 
+/**
+ * KYCIntegration component handles integrating with a KYC provider to check 
+ * if the user has passed KYC verification.
+ * 
+ * It fetches the user's token balance, checks if it meets the minimum required 
+ * tokens, and if so calls the KYC check API. It displays the KYC status or 
+ * instructions based on the results.
+ * 
+ * The component uses React hooks for state and effects.
+ */
 function KYCIntegration() {
     const [userTokenBalance, setUserTokenBalance] = useState(0);
     const [kycStatus, setKycStatus] = useState(null);
