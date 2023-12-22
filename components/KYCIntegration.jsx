@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
-import { Polygon } from '@polygon/polygon.js';
 import TokenContract from '../TokenContract';
 
 function KYCIntegration() {
@@ -8,15 +7,15 @@ function KYCIntegration() {
     const [kycStatus, setKycStatus] = useState(null);
     const requiredTokens = 1000;
 
-    const polygon = new Polygon('YOUR_POLYGON_RPC_ENDPOINT');
-    const web3 = new Web3(polygon);
+    // Use a Polygon RPC endpoint directly with Web3
+    const web3 = new Web3('https://polygon-rpc.com');
 
     useEffect(() => {
         const fetchUserTokenBalance = async () => {
             try {
                 const accounts = await web3.eth.getAccounts();
                 const userAddress = accounts[0];
-                const tokenContract = new web3.eth.Contract(TokenContract.abi, 'YOUR_TOKEN_ADDRESS');
+                const tokenContract = new web3.eth.Contract(TokenContract.abi, '0x5f5f7ca63A9d2c5200BC03CA3335a975D8f771d9');
                 const tokenBalance = await tokenContract.methods.balanceOf(userAddress).call();
                 setUserTokenBalance(parseInt(tokenBalance));
 
@@ -62,8 +61,7 @@ function KYCIntegration() {
     );
 }
 
-// ...
-
+// KYC check function
 async function doKycCheckWithBlockpass(userAddress) {
     try {
         const response = await fetch('https://blockpass.org/kyc/api', {
